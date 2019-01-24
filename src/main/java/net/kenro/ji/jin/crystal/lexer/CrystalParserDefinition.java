@@ -62,9 +62,9 @@ public class CrystalParserDefinition implements ParserDefinition {
         return new CrystalFile(viewProvider);
     }
 
-    public ParserDefinition.SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
-        return ParserDefinition.SpaceRequirements.MAY;
-    }
+//    public ParserDefinition.SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right) {
+//        return ParserDefinition.SpaceRequirements.MAY;
+//    }
 
     @NotNull
     public PsiElement createElement(ASTNode node) {

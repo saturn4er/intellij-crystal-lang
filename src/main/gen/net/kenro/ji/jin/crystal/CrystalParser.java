@@ -71,6 +71,12 @@ public class CrystalParser implements PsiParser, LightPsiParser {
     else if (root_ == OP_ASGN) {
       result_ = opAsgn(builder_, 0);
     }
+    else if (root_ == REQUIRE_PATH) {
+      result_ = requirePath(builder_, 0);
+    }
+    else if (root_ == REQUIRE_STATEMENT) {
+      result_ = requireStatement(builder_, 0);
+    }
     else if (root_ == SINGLETON) {
       result_ = singleton(builder_, 0);
     }
@@ -2025,6 +2031,31 @@ public class CrystalParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // STRING_LITERAL
+  public static boolean requirePath(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "requirePath")) return false;
+    if (!nextTokenIs(builder_, STRING_LITERAL)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, STRING_LITERAL);
+    exit_section_(builder_, marker_, REQUIRE_PATH, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // 'require' requirePath
+  public static boolean requireStatement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "requireStatement")) return false;
+    if (!nextTokenIs(builder_, REQUIRE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, REQUIRE);
+    result_ = result_ && requirePath(builder_, level_ + 1);
+    exit_section_(builder_, marker_, REQUIRE_STATEMENT, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // variable | '(' expressions ')'
   public static boolean singleton(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "singleton")) return false;
@@ -2055,7 +2086,7 @@ public class CrystalParser implements PsiParser, LightPsiParser {
   //    | 'while' expression
   //    | 'unless' expression
   //    | 'until' expression
-  //    | 'require' STRING_LITERAL
+  //    | requireStatement
   //    | 'begin' '{' compositeStatement '}'
   //    | 'end' '{' compositeStatement '}'
   //    | lhs '=' command ['do' ['|' [blockVariable] '|'] compositeStatement 'end']
@@ -2071,7 +2102,7 @@ public class CrystalParser implements PsiParser, LightPsiParser {
     if (!result_) result_ = statement_3(builder_, level_ + 1);
     if (!result_) result_ = statement_4(builder_, level_ + 1);
     if (!result_) result_ = statement_5(builder_, level_ + 1);
-    if (!result_) result_ = parseTokens(builder_, 0, REQUIRE, STRING_LITERAL);
+    if (!result_) result_ = requireStatement(builder_, level_ + 1);
     if (!result_) result_ = statement_7(builder_, level_ + 1);
     if (!result_) result_ = statement_8(builder_, level_ + 1);
     if (!result_) result_ = statement_9(builder_, level_ + 1);

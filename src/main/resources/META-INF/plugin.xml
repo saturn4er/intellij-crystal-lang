@@ -1,49 +1,64 @@
 <idea-plugin>
-  <id>net.kenro.ji.jin.intellij.crystal</id>
-  <name>Crystal language plugin</name>
-  <version>1.0</version>
-  <vendor email="kingsley.hendrickse@gmail.com" url="http://kenro-ji-jin.net/">Kenro Ji Jin</vendor>
+    <id>net.kenro.ji.jin.intellij.crystal</id>
+    <name>Crystal language plugin</name>
+    <version>1.0</version>
+    <vendor email="kingsley.hendrickse@gmail.com" url="http://kenro-ji-jin.net/">Kenro Ji Jin</vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
       This plugin provides Crystal language support
     ]]></description>
 
-  <change-notes><![CDATA[
+    <change-notes><![CDATA[
       Initial first cut of the language parser - nothing else.
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="182.0"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="182.0"/>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <depends>com.intellij.modules.lang</depends>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-    <fileTypeFactory implementation="net.kenro.ji.jin.crystal.file.CrystalFileTypeFactory"/>
+    <extensions defaultExtensionNs="com.intellij">
+        <sdkType implementation="net.kenro.ji.jin.crystal.sdk.CrystalSdkType"/>
+        <projectService serviceInterface="net.kenro.ji.jin.crystal.sdk.CrystalSdkService"
+                        serviceImplementation="net.kenro.ji.jin.crystal.sdk.CrystalSmallIDEsSdkService"
+                        overrides="false"/>
+        <!-- Add your extensions here -->
+        <fileTypeFactory implementation="net.kenro.ji.jin.crystal.file.CrystalFileTypeFactory"/>
 
-    <lang.parserDefinition language="Crystal" implementationClass="net.kenro.ji.jin.crystal.lexer.CrystalParserDefinition"/>
+        <lang.parserDefinition language="Crystal"
+                               implementationClass="net.kenro.ji.jin.crystal.lexer.CrystalParserDefinition"/>
 
-    <lang.syntaxHighlighterFactory language="Crystal"
-                                   implementationClass="net.kenro.ji.jin.crystal.highlighting.CrystalSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="Crystal"
+                                       implementationClass="net.kenro.ji.jin.crystal.highlighting.CrystalSyntaxHighlighterFactory"/>
 
-    <colorSettingsPage
-            implementation="net.kenro.ji.jin.crystal.highlighting.CrystalColorSettingsPage" />
+        <colorSettingsPage
+                implementation="net.kenro.ji.jin.crystal.highlighting.CrystalColorSettingsPage"/>
 
-    <lang.commenter
-            language="Crystal"
-            implementationClass="net.kenro.ji.jin.crystal.features.CrystalCommenter"/>
+        <lang.commenter
+                language="Crystal"
+                implementationClass="net.kenro.ji.jin.crystal.features.CrystalCommenter"/>
 
-    <lang.braceMatcher
-            language="Crystal"
-            implementationClass="net.kenro.ji.jin.crystal.features.CrystalPairedBraceMatcher"/>
+        <lang.braceMatcher
+                language="Crystal"
+                implementationClass="net.kenro.ji.jin.crystal.features.CrystalPairedBraceMatcher"/>
 
-  </extensions>
+        <configurationType
+                implementation="net.kenro.ji.jin.crystal.features.runconfig.file.CrystalRunFileConfigurationType"/>
+        <!--<runConfigurationProducer-->
+                <!--implementation="net.kenro.ji.jin.crystal.features.runconfig.file.CrystalRunFileConfigurationProducer"/>-->
+        <!--<defaultTemplatePropertiesProvider implementation="net.kenro.ji.jin.crystal.actions.file.CrystalTemplatePropertiesProvider"/>-->
+        <!--<completion.contributor language="Crystal"-->
+                <!--implementationClass="net.kenro.ji.jin.crystal.features.completions.RequireCompletionsContributor"/>-->
+    </extensions>
 
-  <actions>
-    <!-- Add your actions here -->
-  </actions>
+    <actions>
+        <action id="Crystal.NewCrystalFile" class="net.kenro.ji.jin.crystal.actions.file.CrystalCreateFileAction"
+                text="Crystal File" description="Create new Crystal file">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
+        </action>
+    </actions>
 
 </idea-plugin>

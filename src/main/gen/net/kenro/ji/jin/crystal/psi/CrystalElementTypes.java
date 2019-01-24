@@ -24,6 +24,8 @@ public interface CrystalElementTypes {
   IElementType MLHS_ITEM = new CrystalElementType("MLHS_ITEM");
   IElementType MRHS = new CrystalElementType("MRHS");
   IElementType OP_ASGN = new CrystalElementType("OP_ASGN");
+  IElementType REQUIRE_PATH = new CrystalElementType("REQUIRE_PATH");
+  IElementType REQUIRE_STATEMENT = new CrystalElementType("REQUIRE_STATEMENT");
   IElementType SINGLETON = new CrystalElementType("SINGLETON");
   IElementType STATEMENT = new CrystalElementType("STATEMENT");
   IElementType SYMBOL = new CrystalElementType("SYMBOL");
@@ -261,6 +263,12 @@ public interface CrystalElementTypes {
       }
       else if (type == OP_ASGN) {
         return new CrystalOpAsgnImpl(node);
+      }
+      else if (type == REQUIRE_PATH) {
+        return new CrystalRequirePathImpl(node);
+      }
+      else if (type == REQUIRE_STATEMENT) {
+        return new CrystalRequireStatementImpl(node);
       }
       else if (type == SINGLETON) {
         return new CrystalSingletonImpl(node);

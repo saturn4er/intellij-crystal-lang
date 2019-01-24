@@ -71,6 +71,14 @@ public class CrystalVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRequirePath(@NotNull CrystalRequirePath o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRequireStatement(@NotNull CrystalRequireStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitSingleton(@NotNull CrystalSingleton o) {
     visitPsiElement(o);
   }

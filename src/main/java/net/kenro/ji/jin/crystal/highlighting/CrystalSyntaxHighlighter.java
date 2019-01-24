@@ -1,5 +1,6 @@
 package net.kenro.ji.jin.crystal.highlighting;
 
+import com.intellij.ide.highlighter.JavaHighlightingColors;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.CodeInsightColors;
@@ -34,9 +35,9 @@ public class CrystalSyntaxHighlighter extends SyntaxHighlighterBase {
 
     public static final TextAttributesKey OPERATOR = createKey("CRYSTAL_OPERATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
 
-    public static final TextAttributesKey VARIABLE = createKey("CRYSTAL_VARIABLE", CodeInsightColors.INSTANCE_FIELD_ATTRIBUTES);
+    public static final TextAttributesKey VARIABLE = createKey("CRYSTAL_VARIABLE", JavaHighlightingColors.INSTANCE_FIELD_ATTRIBUTES);
 
-    public static final TextAttributesKey METHOD_DECLARATION = createKey("CRYSTAL_METHOD_DECLARATION", CodeInsightColors.METHOD_CALL_ATTRIBUTES);
+    public static final TextAttributesKey METHOD_DECLARATION = createKey("CRYSTAL_METHOD_DECLARATION", JavaHighlightingColors.METHOD_CALL_ATTRIBUTES);
 
     public static final TextAttributesKey CRYSTAL_COMMA = createKey("CRYSTAL_COMMA", DefaultLanguageHighlighterColors.COMMA);
 

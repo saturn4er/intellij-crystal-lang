@@ -37,6 +37,9 @@ public interface CrystalStatement extends PsiElement {
   @NotNull
   List<CrystalOpAsgn> getOpAsgnList();
 
+  @Nullable
+  CrystalRequireStatement getRequireStatement();
+
   @NotNull
   List<CrystalStatement> getStatementList();
 

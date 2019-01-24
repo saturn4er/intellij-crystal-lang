@@ -87,6 +87,12 @@ public class CrystalStatementImpl extends ASTWrapperPsiElement implements Crysta
   }
 
   @Override
+  @Nullable
+  public CrystalRequireStatement getRequireStatement() {
+    return findChildByClass(CrystalRequireStatement.class);
+  }
+
+  @Override
   @NotNull
   public List<CrystalStatement> getStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalStatement.class);

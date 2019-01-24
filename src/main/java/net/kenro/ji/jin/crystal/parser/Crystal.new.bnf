@@ -139,7 +139,6 @@
 
         BREAK =                              "break"
         INITIALIZE =                         "initialize"
-        NEW =                                "new"
         LOOP =                               "loop"
         PREPEND =                            "prepend"
         FAIL =                               "fail"
@@ -172,8 +171,6 @@
         LOCAL_VARIABLES =                    "local_variables"
         OPEN =                               "open"
         P =                                  "p"
-        PRINT =                              "print"
-        PRINTF =                             "printf"
         PROC =                               "proc"
         PUTC =                               "putc"
         PUTS =                               "puts"
@@ -183,7 +180,6 @@
         SET_TRACE_FUNC =                     "set_trace_func"
         SLEEP =                              "sleep"
         SPAWN =                              "spawn"
-        SPRINTF =                            "sprintf"
         SRAND =                              "srand"
         SUB =                                "sub"
         SYSCALL =                            "syscall"
@@ -215,30 +211,36 @@
 
 crystalFile ::= item_*
 
-private item_ ::= (statements | expressions)
+private item_ ::= statements
 
-private compositeStatement ::= (statements | expressions)
+private compositeStatement ::= statements
 
 private statements ::= statement [statements]
 
+identifier ::= IDENT (('.' | '::') IDENT)*
+
 statement ::=
-    [call] 'do' ['|' [blockVariable] '|'] [compositeStatement] 'end'
-   | 'undef' fname
-   | 'alias' fname fname
-   | 'while' expression
-   | 'unless' expression
-   | 'until' expression
-   | requireStatement
-   | 'begin' '{' compositeStatement '}'
-   | 'end' '{' compositeStatement '}'
-   | lhs '=' command ['do' ['|' [blockVariable] '|'] compositeStatement 'end']
-   | expression
-   | 'if' expression
+    requireStatement
+    | assignStatement
+    | callStatement
+    | STRING_LITERAL
+//   | 'undef' fname
+//   | 'alias' fname fname
+//   | 'while' expression
+//   | 'unless' expression
+//   | 'until' expression
+//   | 'begin' '{' compositeStatement '}'
+//   | 'end' '{' compositeStatement '}'
+//   | assignStatement
+//   | expression
+//   | 'if' expression
+//   | call
+
+requireStatement ::= 'require' STRING_LITERAL
+assignStatement ::= identifier '=' statement
+callStatement ::= identifier ['(' callArgs ')' | callArgs] ['do' ['|' [blockVariable] '|'] [compositeStatement] 'end']
 
 private expressions ::= expression [expressions]
-
-requireStatement ::= 'require' requirePath
-requirePath ::= STRING_LITERAL
 
 expression ::=
   mlhs '=' mrhs
@@ -253,7 +255,7 @@ expression ::=
 
 call ::= function | command
 
-private command ::= operation callArgs
+command ::= operation '.' callArgs
          | primaries ('.' | '::') operation [callArgs]
          | 'super' callArgs
          | 'loop'
@@ -287,6 +289,7 @@ private callArgs ::= args
        | assocs [',' '*' args] [',' '&' arg]
        | '*' arg [',' '&' arg] | '&' arg
        | command
+       | STRING_LITERAL
 
 private args ::= arg [',' args]
 
@@ -361,7 +364,7 @@ symbol ::= ':' (fname | varName)
 fname ::=  IDENT | '..' | '|' | '^'|'&'| '<=>' | '==' | '===' | '=~'  | '>' | '>=' | '<' | '<=' | '+' | '-' | '*' | '/'
              | '%'| '**' | '<<' | '>>' | '~' | '+@' | '-@' | '[]' | '[]='
 
-private operation ::= IDENT ['!' | '?']
+private operation ::=  (IDENT ['!' | '?'])
 
 varName ::= global | '@' IDENT | IDENT
 
