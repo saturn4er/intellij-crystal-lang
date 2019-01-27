@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalVarNameImpl extends ASTWrapperPsiElement implements CrystalVarName {
 
-  public CrystalVarNameImpl(ASTNode node) {
+  public CrystalVarNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 

@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalAssocArrayImpl extends ASTWrapperPsiElement implements CrystalAssocArray {
 
-  public CrystalAssocArrayImpl(ASTNode node) {
+  public CrystalAssocArrayImpl(@NotNull ASTNode node) {
     super(node);
   }
 

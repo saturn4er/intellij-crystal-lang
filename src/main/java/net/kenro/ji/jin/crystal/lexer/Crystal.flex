@@ -29,7 +29,7 @@ IDENTIFIER_CHAR=[[:letter:][:digit:]_]
 HEX_CHAR=[[:digit:]A-Fa-f]
 LOWER_CASE_IDENTIFIER=[:lowercase:]{IDENTIFIER_CHAR}*
 CAPITALISED_IDENTIFIER=[:uppercase:]{IDENTIFIER_CHAR}*
-STRING_LITERAL=\"(\\.|[^\\\"])*\"
+STRING=\"(\\.|[^\\\"])*\"
 STRING_WITH_DOUBLE_QUOTES_LITERAL=\"\"\"(\\.|[^\\\"]|\"{1,2}([^\"\\]|\\\"))*\"\"\"
 STRING_WITH_SINGLE_QUOTES_LITERAL=((\" ([^\"\n])* \"?) | ("'" ([^\'\n])* \'?))
 NUMBER_LITERAL=("-")?[:digit:]+(\.[:digit:]+)?
@@ -222,13 +222,13 @@ CHAR_LITERAL='(\\.|\\x{HEX_CHAR}+|[^\\'])'
         return IDENT;
     }
     {STRING_WITH_DOUBLE_QUOTES_LITERAL} {
-        return STRING_LITERAL;
+        return STRING;
     }
      {STRING_WITH_SINGLE_QUOTES_LITERAL} {
-            return STRING_LITERAL;
+            return STRING;
         }
-    {STRING_LITERAL} {
-        return STRING_LITERAL;
+    {STRING} {
+        return STRING;
     }
     {CHAR_LITERAL} {
         return CHAR_LITERAL;

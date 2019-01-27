@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalOpAsgnImpl extends ASTWrapperPsiElement implements CrystalOpAsgn {
 
-  public CrystalOpAsgnImpl(ASTNode node) {
+  public CrystalOpAsgnImpl(@NotNull ASTNode node) {
     super(node);
   }
 

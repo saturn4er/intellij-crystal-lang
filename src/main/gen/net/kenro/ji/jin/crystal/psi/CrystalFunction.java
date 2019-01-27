@@ -20,6 +20,9 @@ public interface CrystalFunction extends PsiElement {
   List<CrystalBlockVariable> getBlockVariableList();
 
   @NotNull
+  List<CrystalCommand> getCommandList();
+
+  @NotNull
   List<CrystalExpression> getExpressionList();
 
   @Nullable
@@ -39,9 +42,6 @@ public interface CrystalFunction extends PsiElement {
 
   @Nullable
   CrystalSingleton getSingleton();
-
-  @NotNull
-  List<CrystalStatement> getStatementList();
 
   @NotNull
   List<CrystalTuple> getTupleList();

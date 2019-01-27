@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalExpressionImpl extends ASTWrapperPsiElement implements CrystalExpression {
 
-  public CrystalExpressionImpl(ASTNode node) {
+  public CrystalExpressionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -24,6 +24,12 @@ public class CrystalExpressionImpl extends ASTWrapperPsiElement implements Cryst
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof CrystalVisitor) accept((CrystalVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public CrystalAliasExpression getAliasExpression() {
+    return findChildByClass(CrystalAliasExpression.class);
   }
 
   @Override
@@ -39,9 +45,21 @@ public class CrystalExpressionImpl extends ASTWrapperPsiElement implements Cryst
   }
 
   @Override
+  @Nullable
+  public CrystalBlockVariable getBlockVariable() {
+    return findChildByClass(CrystalBlockVariable.class);
+  }
+
+  @Override
+  @Nullable
+  public CrystalCall getCall() {
+    return findChildByClass(CrystalCall.class);
+  }
+
+  @Override
   @NotNull
-  public List<CrystalBlockVariable> getBlockVariableList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalBlockVariable.class);
+  public List<CrystalCommand> getCommandList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalCommand.class);
   }
 
   @Override
@@ -51,15 +69,21 @@ public class CrystalExpressionImpl extends ASTWrapperPsiElement implements Cryst
   }
 
   @Override
+  @Nullable
+  public CrystalFname getFname() {
+    return findChildByClass(CrystalFname.class);
+  }
+
+  @Override
   @NotNull
   public List<CrystalFunction> getFunctionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalFunction.class);
   }
 
   @Override
-  @NotNull
-  public List<CrystalLhs> getLhsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalLhs.class);
+  @Nullable
+  public CrystalLhs getLhs() {
+    return findChildByClass(CrystalLhs.class);
   }
 
   @Override
@@ -69,27 +93,15 @@ public class CrystalExpressionImpl extends ASTWrapperPsiElement implements Cryst
   }
 
   @Override
-  @Nullable
-  public CrystalMlhs getMlhs() {
-    return findChildByClass(CrystalMlhs.class);
-  }
-
-  @Override
-  @Nullable
-  public CrystalMrhs getMrhs() {
-    return findChildByClass(CrystalMrhs.class);
-  }
-
-  @Override
   @NotNull
   public List<CrystalOpAsgn> getOpAsgnList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalOpAsgn.class);
   }
 
   @Override
-  @NotNull
-  public List<CrystalStatement> getStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalStatement.class);
+  @Nullable
+  public CrystalRequireStatement getRequireStatement() {
+    return findChildByClass(CrystalRequireStatement.class);
   }
 
   @Override

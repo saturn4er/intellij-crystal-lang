@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalGlobalImpl extends ASTWrapperPsiElement implements CrystalGlobal {
 
-  public CrystalGlobalImpl(ASTNode node) {
+  public CrystalGlobalImpl(@NotNull ASTNode node) {
     super(node);
   }
 

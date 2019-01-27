@@ -11,14 +11,14 @@ import static net.kenro.ji.jin.crystal.psi.CrystalElementTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import net.kenro.ji.jin.crystal.psi.*;
 
-public class CrystalStatementImpl extends ASTWrapperPsiElement implements CrystalStatement {
+public class CrystalCommandImpl extends ASTWrapperPsiElement implements CrystalCommand {
 
-  public CrystalStatementImpl(ASTNode node) {
+  public CrystalCommandImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CrystalVisitor visitor) {
-    visitor.visitStatement(this);
+    visitor.visitCommand(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -39,27 +39,21 @@ public class CrystalStatementImpl extends ASTWrapperPsiElement implements Crysta
   }
 
   @Override
-  @Nullable
-  public CrystalBlockVariable getBlockVariable() {
-    return findChildByClass(CrystalBlockVariable.class);
+  @NotNull
+  public List<CrystalBlockVariable> getBlockVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalBlockVariable.class);
   }
 
   @Override
-  @Nullable
-  public CrystalCall getCall() {
-    return findChildByClass(CrystalCall.class);
+  @NotNull
+  public List<CrystalCommand> getCommandList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalCommand.class);
   }
 
   @Override
   @NotNull
   public List<CrystalExpression> getExpressionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalExpression.class);
-  }
-
-  @Override
-  @Nullable
-  public CrystalFname getFname() {
-    return findChildByClass(CrystalFname.class);
   }
 
   @Override
@@ -84,18 +78,6 @@ public class CrystalStatementImpl extends ASTWrapperPsiElement implements Crysta
   @NotNull
   public List<CrystalOpAsgn> getOpAsgnList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalOpAsgn.class);
-  }
-
-  @Override
-  @Nullable
-  public CrystalRequireStatement getRequireStatement() {
-    return findChildByClass(CrystalRequireStatement.class);
-  }
-
-  @Override
-  @NotNull
-  public List<CrystalStatement> getStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalStatement.class);
   }
 
   @Override

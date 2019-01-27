@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalSymbolImpl extends ASTWrapperPsiElement implements CrystalSymbol {
 
-  public CrystalSymbolImpl(ASTNode node) {
+  public CrystalSymbolImpl(@NotNull ASTNode node) {
     super(node);
   }
 

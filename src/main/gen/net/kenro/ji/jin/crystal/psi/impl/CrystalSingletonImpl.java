@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalSingletonImpl extends ASTWrapperPsiElement implements CrystalSingleton {
 
-  public CrystalSingletonImpl(ASTNode node) {
+  public CrystalSingletonImpl(@NotNull ASTNode node) {
     super(node);
   }
 

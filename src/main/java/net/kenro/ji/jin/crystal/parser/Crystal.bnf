@@ -12,7 +12,7 @@
     psiImplClassSuffix='Impl'
     psiPackage='net.kenro.ji.jin.crystal.psi'
     psiImplPackage='net.kenro.ji.jin.crystal.psi.impl'
-
+    psiImplUtilClass="net.kenro.ji.jin.crystal.psi.impl.CrystalPsiImplUtil"
     generateTokenAccessors=false
 
     tokens = [
@@ -174,7 +174,7 @@
         P =                                  "p"
         PRINT =                              "print"
         PRINTF =                             "printf"
-        PROC =                               "proc"
+        PROC =                               "Proc"
         PUTC =                               "putc"
         PUTS =                               "puts"
         RAND =                               "rand"
@@ -195,7 +195,7 @@
         WARN =                               "warn"
 
         LINE_COMMENT =                       'regexp:#.*'
-        STRING_LITERAL =                     'regexp:("([^\"\\]|\\.)*")'
+        STRING         =                     'regexp:("([^\"\\]|\\.)*")'
         NUMBER_LITERAL =                     'regexp:(\+|\-)?(0b[01_]+|0o[0-7_]+|0x[a-fA-f\d_]+|[\d_]+)(\.[\d_]+)?(e[-+]?[\d_]+)?(_?(i|f|u)(8|16|32|64))?'
         CHAR_LITERAL   =                     "regexp:('([^'\\]|\\.)*')"
 
@@ -219,42 +219,61 @@ private item_ ::= (statements | expressions)
 
 private compositeStatement ::= (statements | expressions)
 
-private statements ::= statement [statements]
-
-statement ::=
-    [call] 'do' ['|' [blockVariable] '|'] [compositeStatement] 'end'
-   | 'undef' fname
-   | 'alias' fname fname
-   | 'while' expression
-   | 'unless' expression
-   | 'until' expression
-   | requireStatement
-   | 'begin' '{' compositeStatement '}'
-   | 'end' '{' compositeStatement '}'
-   | lhs '=' command ['do' ['|' [blockVariable] '|'] compositeStatement 'end']
-   | expression
-   | 'if' expression
 
 private expressions ::= expression [expressions]
 
 requireStatement ::= 'require' requirePath
-requirePath ::= STRING_LITERAL
+requirePath ::= stringLiteral {
+    methods=[getPath getPathTextRange]
+}
+
+stringLiteral ::= STRING {
+  implements = "com.intellij.psi.PsiLanguageInjectionHost"
+  methods = [isValidHost updateText createLiteralTextEscaper getDecodedText]
+}
 
 expression ::=
-  mlhs '=' mrhs
-| 'return' callArgs
-| 'yield' [callArgs]
-| 'and' expression
-| 'or' expression
-| 'not' expression
-| command
-| '!' command
-| arg
+    [call] 'do' ['|' [blockVariable] '|'] [compositeStatement] 'end'
+    | 'undef' fname
+    | aliasExpression
+    | 'while' expression
+    | 'unless' expression
+    | 'until' expression
+    | requireStatement
+    | 'begin' '{' compositeStatement '}'
+    | 'end' '{' compositeStatement '}'
+    | lhs '=' expression
+    | 'if' expression
+    | 'return' callArgs
+    | 'yield' [callArgs]
+    | 'and' expression
+    | 'or' expression
+    | 'not' expression
+    | command
+    | '!' command
+    | arg
+
+aliasExpression ::= 'alias' IDENT EQUAL type
+
+
+typee ::= procType                                            // Proc
+    | toupleType
+    | type ( COMMA type ) * ARRAY MINUS_GREATER type      // Proc Type->Type
+    | type [LEFT_BRACKET (NUMBER_LITERAL) RIGHT_BRACKET]  // Array  Type[n]
+    | type '.' CLASS
+    | IDENT
+
+
+
+procType ::= PROC LEFT_PAREN type type* RIGHT_PAREN
+toupleType ::= LEFT_BRACE
+    | 'NamedTuple' LEFT_PAREN (IDENT ':' type)(',' IDENT ':' type)* RIGHT_PAREN
+
 
 call ::= function | command
 
-private command ::= operation callArgs
-         | primaries ('.' | '::') operation [callArgs]
+command ::= operation callArgs
+         | primaries ('.' | '::') command
          | 'super' callArgs
          | 'loop'
 
@@ -304,8 +323,8 @@ private primary ::= '(' compositeStatement ')'
 | literal
 | variable
 | '::' IDENT
-| '[' [args] ']'
-| '[' [args [',']] ']'
+| '[' [args] ']' [QUESTION]
+| '[' [args [',']] ']' [QUESTION]
 | assocArrays
 | tuples
 | 'return' ['(' [callArgs] ')']
@@ -350,7 +369,7 @@ literal ::= ( NIL
                     | FALSE
                     | NUMBER_LITERAL
                     | CHAR_LITERAL
-                    | STRING_LITERAL
+                    | STRING
                     | symbol)
 
 opAsgn ::= '+='|'-='|'*='|'/='|'%='|'**=' |'&='|'|='|'ˆ='|'<<='|'>>=' |'&&='|'||='
@@ -361,7 +380,7 @@ symbol ::= ':' (fname | varName)
 fname ::=  IDENT | '..' | '|' | '^'|'&'| '<=>' | '==' | '===' | '=~'  | '>' | '>=' | '<' | '<=' | '+' | '-' | '*' | '/'
              | '%'| '**' | '<<' | '>>' | '~' | '+@' | '-@' | '[]' | '[]='
 
-private operation ::= IDENT ['!' | '?']
+private operation ::= (IDENT ['!' | '?']) | NEW | PRINT
 
 varName ::= global | '@' IDENT | IDENT
 

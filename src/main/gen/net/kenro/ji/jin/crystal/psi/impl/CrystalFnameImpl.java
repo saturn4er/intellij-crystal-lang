@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalFnameImpl extends ASTWrapperPsiElement implements CrystalFname {
 
-  public CrystalFnameImpl(ASTNode node) {
+  public CrystalFnameImpl(@NotNull ASTNode node) {
     super(node);
   }
 

@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalFunctionImpl extends ASTWrapperPsiElement implements CrystalFunction {
 
-  public CrystalFunctionImpl(ASTNode node) {
+  public CrystalFunctionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -48,6 +48,12 @@ public class CrystalFunctionImpl extends ASTWrapperPsiElement implements Crystal
   @NotNull
   public List<CrystalBlockVariable> getBlockVariableList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalBlockVariable.class);
+  }
+
+  @Override
+  @NotNull
+  public List<CrystalCommand> getCommandList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalCommand.class);
   }
 
   @Override
@@ -90,12 +96,6 @@ public class CrystalFunctionImpl extends ASTWrapperPsiElement implements Crystal
   @Nullable
   public CrystalSingleton getSingleton() {
     return findChildByClass(CrystalSingleton.class);
-  }
-
-  @Override
-  @NotNull
-  public List<CrystalStatement> getStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalStatement.class);
   }
 
   @Override

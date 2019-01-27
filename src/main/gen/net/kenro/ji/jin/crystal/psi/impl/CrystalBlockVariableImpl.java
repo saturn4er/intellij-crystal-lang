@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalBlockVariableImpl extends ASTWrapperPsiElement implements CrystalBlockVariable {
 
-  public CrystalBlockVariableImpl(ASTNode node) {
+  public CrystalBlockVariableImpl(@NotNull ASTNode node) {
     super(node);
   }
 

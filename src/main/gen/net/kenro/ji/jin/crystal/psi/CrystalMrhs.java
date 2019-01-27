@@ -17,6 +17,9 @@ public interface CrystalMrhs extends PsiElement {
   List<CrystalBlockVariable> getBlockVariableList();
 
   @NotNull
+  List<CrystalCommand> getCommandList();
+
+  @NotNull
   List<CrystalExpression> getExpressionList();
 
   @NotNull
@@ -30,9 +33,6 @@ public interface CrystalMrhs extends PsiElement {
 
   @NotNull
   List<CrystalOpAsgn> getOpAsgnList();
-
-  @NotNull
-  List<CrystalStatement> getStatementList();
 
   @NotNull
   List<CrystalTuple> getTupleList();

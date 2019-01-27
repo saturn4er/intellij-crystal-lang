@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalLhsImpl extends ASTWrapperPsiElement implements CrystalLhs {
 
-  public CrystalLhsImpl(ASTNode node) {
+  public CrystalLhsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -46,6 +46,12 @@ public class CrystalLhsImpl extends ASTWrapperPsiElement implements CrystalLhs {
 
   @Override
   @NotNull
+  public List<CrystalCommand> getCommandList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalCommand.class);
+  }
+
+  @Override
+  @NotNull
   public List<CrystalExpression> getExpressionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalExpression.class);
   }
@@ -72,12 +78,6 @@ public class CrystalLhsImpl extends ASTWrapperPsiElement implements CrystalLhs {
   @NotNull
   public List<CrystalOpAsgn> getOpAsgnList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalOpAsgn.class);
-  }
-
-  @Override
-  @NotNull
-  public List<CrystalStatement> getStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrystalStatement.class);
   }
 
   @Override

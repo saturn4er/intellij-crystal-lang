@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface CrystalStatement extends PsiElement {
+public interface CrystalCommand extends PsiElement {
 
   @NotNull
   List<CrystalAssoc> getAssocList();
@@ -13,17 +13,14 @@ public interface CrystalStatement extends PsiElement {
   @NotNull
   List<CrystalAssocArray> getAssocArrayList();
 
-  @Nullable
-  CrystalBlockVariable getBlockVariable();
+  @NotNull
+  List<CrystalBlockVariable> getBlockVariableList();
 
-  @Nullable
-  CrystalCall getCall();
+  @NotNull
+  List<CrystalCommand> getCommandList();
 
   @NotNull
   List<CrystalExpression> getExpressionList();
-
-  @Nullable
-  CrystalFname getFname();
 
   @NotNull
   List<CrystalFunction> getFunctionList();
@@ -36,12 +33,6 @@ public interface CrystalStatement extends PsiElement {
 
   @NotNull
   List<CrystalOpAsgn> getOpAsgnList();
-
-  @Nullable
-  CrystalRequireStatement getRequireStatement();
-
-  @NotNull
-  List<CrystalStatement> getStatementList();
 
   @NotNull
   List<CrystalTuple> getTupleList();

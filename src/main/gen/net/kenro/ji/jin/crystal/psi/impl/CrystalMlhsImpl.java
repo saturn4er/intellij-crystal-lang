@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalMlhsImpl extends ASTWrapperPsiElement implements CrystalMlhs {
 
-  public CrystalMlhsImpl(ASTNode node) {
+  public CrystalMlhsImpl(@NotNull ASTNode node) {
     super(node);
   }
 

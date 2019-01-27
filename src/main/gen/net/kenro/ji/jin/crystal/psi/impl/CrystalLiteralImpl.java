@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalLiteralImpl extends ASTWrapperPsiElement implements CrystalLiteral {
 
-  public CrystalLiteralImpl(ASTNode node) {
+  public CrystalLiteralImpl(@NotNull ASTNode node) {
     super(node);
   }
 

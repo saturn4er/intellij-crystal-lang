@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalRequireStatementImpl extends ASTWrapperPsiElement implements CrystalRequireStatement {
 
-  public CrystalRequireStatementImpl(ASTNode node) {
+  public CrystalRequireStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 

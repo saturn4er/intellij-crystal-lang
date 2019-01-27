@@ -4,8 +4,13 @@ package net.kenro.ji.jin.crystal.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiLanguageInjectionHost;
 
 public class CrystalVisitor extends PsiElementVisitor {
+
+  public void visitAliasExpression(@NotNull CrystalAliasExpression o) {
+    visitPsiElement(o);
+  }
 
   public void visitArgDecl(@NotNull CrystalArgDecl o) {
     visitPsiElement(o);
@@ -28,6 +33,10 @@ public class CrystalVisitor extends PsiElementVisitor {
   }
 
   public void visitCall(@NotNull CrystalCall o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCommand(@NotNull CrystalCommand o) {
     visitPsiElement(o);
   }
 
@@ -71,6 +80,10 @@ public class CrystalVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitProcType(@NotNull CrystalProcType o) {
+    visitPsiElement(o);
+  }
+
   public void visitRequirePath(@NotNull CrystalRequirePath o) {
     visitPsiElement(o);
   }
@@ -83,15 +96,23 @@ public class CrystalVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitStatement(@NotNull CrystalStatement o) {
-    visitPsiElement(o);
+  public void visitStringLiteral(@NotNull CrystalStringLiteral o) {
+    visitPsiLanguageInjectionHost(o);
   }
 
   public void visitSymbol(@NotNull CrystalSymbol o) {
     visitPsiElement(o);
   }
 
+  public void visitToupleType(@NotNull CrystalToupleType o) {
+    visitPsiElement(o);
+  }
+
   public void visitTuple(@NotNull CrystalTuple o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypee(@NotNull CrystalTypee o) {
     visitPsiElement(o);
   }
 
@@ -105,6 +126,10 @@ public class CrystalVisitor extends PsiElementVisitor {
 
   public void visitWhenArgs(@NotNull CrystalWhenArgs o) {
     visitPsiElement(o);
+  }
+
+  public void visitPsiLanguageInjectionHost(@NotNull PsiLanguageInjectionHost o) {
+    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

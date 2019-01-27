@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalArgListImpl extends ASTWrapperPsiElement implements CrystalArgList {
 
-  public CrystalArgListImpl(ASTNode node) {
+  public CrystalArgListImpl(@NotNull ASTNode node) {
     super(node);
   }
 

@@ -8,12 +8,14 @@ import net.kenro.ji.jin.crystal.psi.impl.*;
 
 public interface CrystalElementTypes {
 
+  IElementType ALIAS_EXPRESSION = new CrystalElementType("ALIAS_EXPRESSION");
   IElementType ARG_DECL = new CrystalElementType("ARG_DECL");
   IElementType ARG_LIST = new CrystalElementType("ARG_LIST");
   IElementType ASSOC = new CrystalElementType("ASSOC");
   IElementType ASSOC_ARRAY = new CrystalElementType("ASSOC_ARRAY");
   IElementType BLOCK_VARIABLE = new CrystalElementType("BLOCK_VARIABLE");
   IElementType CALL = new CrystalElementType("CALL");
+  IElementType COMMAND = new CrystalElementType("COMMAND");
   IElementType EXPRESSION = new CrystalElementType("EXPRESSION");
   IElementType FNAME = new CrystalElementType("FNAME");
   IElementType FUNCTION = new CrystalElementType("FUNCTION");
@@ -24,12 +26,15 @@ public interface CrystalElementTypes {
   IElementType MLHS_ITEM = new CrystalElementType("MLHS_ITEM");
   IElementType MRHS = new CrystalElementType("MRHS");
   IElementType OP_ASGN = new CrystalElementType("OP_ASGN");
+  IElementType PROC_TYPE = new CrystalElementType("PROC_TYPE");
   IElementType REQUIRE_PATH = new CrystalElementType("REQUIRE_PATH");
   IElementType REQUIRE_STATEMENT = new CrystalElementType("REQUIRE_STATEMENT");
   IElementType SINGLETON = new CrystalElementType("SINGLETON");
-  IElementType STATEMENT = new CrystalElementType("STATEMENT");
+  IElementType STRING_LITERAL = new CrystalElementType("STRING_LITERAL");
   IElementType SYMBOL = new CrystalElementType("SYMBOL");
+  IElementType TOUPLE_TYPE = new CrystalElementType("TOUPLE_TYPE");
   IElementType TUPLE = new CrystalElementType("TUPLE");
+  IElementType TYPEE = new CrystalElementType("TYPEE");
   IElementType VARIABLE = new CrystalElementType("VARIABLE");
   IElementType VAR_NAME = new CrystalElementType("VAR_NAME");
   IElementType WHEN_ARGS = new CrystalElementType("WHEN_ARGS");
@@ -158,7 +163,7 @@ public interface CrystalElementTypes {
   IElementType PRINT = new CrystalTokenType("print");
   IElementType PRINTF = new CrystalTokenType("printf");
   IElementType PRIVATE = new CrystalTokenType("private");
-  IElementType PROC = new CrystalTokenType("proc");
+  IElementType PROC = new CrystalTokenType("Proc");
   IElementType PROPERTY = new CrystalTokenType("property");
   IElementType PROTECTED = new CrystalTokenType("protected");
   IElementType PUTC = new CrystalTokenType("putc");
@@ -185,7 +190,8 @@ public interface CrystalElementTypes {
   IElementType SPAWN = new CrystalTokenType("spawn");
   IElementType SPRINTF = new CrystalTokenType("sprintf");
   IElementType SRAND = new CrystalTokenType("srand");
-  IElementType STRING_LITERAL = new CrystalTokenType("STRING_LITERAL");
+  IElementType STATEMENTS = new CrystalTokenType("statements");
+  IElementType STRING = new CrystalTokenType("STRING");
   IElementType STRUCT = new CrystalTokenType("struct");
   IElementType SUB = new CrystalTokenType("sub");
   IElementType SUPER = new CrystalTokenType("super");
@@ -216,7 +222,10 @@ public interface CrystalElementTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == ARG_DECL) {
+       if (type == ALIAS_EXPRESSION) {
+        return new CrystalAliasExpressionImpl(node);
+      }
+      else if (type == ARG_DECL) {
         return new CrystalArgDeclImpl(node);
       }
       else if (type == ARG_LIST) {
@@ -233,6 +242,9 @@ public interface CrystalElementTypes {
       }
       else if (type == CALL) {
         return new CrystalCallImpl(node);
+      }
+      else if (type == COMMAND) {
+        return new CrystalCommandImpl(node);
       }
       else if (type == EXPRESSION) {
         return new CrystalExpressionImpl(node);
@@ -264,6 +276,9 @@ public interface CrystalElementTypes {
       else if (type == OP_ASGN) {
         return new CrystalOpAsgnImpl(node);
       }
+      else if (type == PROC_TYPE) {
+        return new CrystalProcTypeImpl(node);
+      }
       else if (type == REQUIRE_PATH) {
         return new CrystalRequirePathImpl(node);
       }
@@ -273,14 +288,20 @@ public interface CrystalElementTypes {
       else if (type == SINGLETON) {
         return new CrystalSingletonImpl(node);
       }
-      else if (type == STATEMENT) {
-        return new CrystalStatementImpl(node);
+      else if (type == STRING_LITERAL) {
+        return new CrystalStringLiteralImpl(node);
       }
       else if (type == SYMBOL) {
         return new CrystalSymbolImpl(node);
       }
+      else if (type == TOUPLE_TYPE) {
+        return new CrystalToupleTypeImpl(node);
+      }
       else if (type == TUPLE) {
         return new CrystalTupleImpl(node);
+      }
+      else if (type == TYPEE) {
+        return new CrystalTypeeImpl(node);
       }
       else if (type == VARIABLE) {
         return new CrystalVariableImpl(node);

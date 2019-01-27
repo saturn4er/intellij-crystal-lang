@@ -13,7 +13,7 @@ import net.kenro.ji.jin.crystal.psi.*;
 
 public class CrystalRequirePathImpl extends ASTWrapperPsiElement implements CrystalRequirePath {
 
-  public CrystalRequirePathImpl(ASTNode node) {
+  public CrystalRequirePathImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -24,6 +24,12 @@ public class CrystalRequirePathImpl extends ASTWrapperPsiElement implements Crys
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof CrystalVisitor) accept((CrystalVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public CrystalStringLiteral getStringLiteral() {
+    return findNotNullChildByClass(CrystalStringLiteral.class);
   }
 
 }

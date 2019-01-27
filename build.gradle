@@ -10,8 +10,11 @@ buildscript {
 
 plugins {
     id 'org.jetbrains.intellij' version '0.3.4'
-}
+    id "org.jetbrains.grammarkit" version "2018.2"
 
+}
+apply plugin: 'org.jetbrains.grammarkit'
+import org.jetbrains.grammarkit.tasks.*
 
 sourceSets {
     main {
@@ -26,6 +29,12 @@ sourceSets {
 
 version = "${version}"
 //version = "1.14-SNAPSHOT"
+
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
 
 allprojects {
 //    apply plugin: 'kotlin'
@@ -141,4 +150,44 @@ idea {
     module {
         generatedSourceDirs += file('src/main/gen')
     }
+}
+
+task generateCrystalLexer(type: GenerateLexer) {
+
+    // source flex file
+    source = "./src/main/java/net/kenro/ji/jin/crystal/lexer/Crystal.flex"
+
+    // target directory for lexer
+    targetDir = "./src/main/gen"
+
+    // target classname, target file will be targetDir/targetClass.java
+    targetClass = "_CrystalLexer"
+
+    // if set, plugin will remove a lexer output file before generating new one. Default: false
+    purgeOldFiles = true
+}
+
+task generateCrystalParser(type: GenerateParser) {
+    classpath = fileTree(dir: "build/classes/java/main")
+
+    // source bnf file
+    source = "./src/main/java/net/kenro/ji/jin/crystal/parser/Crystal.bnf"
+
+    // optional, task-specific root for the generated files. Default: none
+    targetRoot = './src/main/gen'
+
+
+    // path to a parser file, relative to the targetRoot
+    pathToParser = './net/kenro/ji/jin/crystal/CrystalParser.java'
+
+    // path to a directory with generated psi files, relative to the targetRoot
+    pathToPsiRoot = '.'
+
+    // if set, plugin will remove a parser output file and psi output directory before generating new ones. Default: false
+    purgeOldFiles = true
+}
+
+task buildGrammar {
+    dependsOn 'generateCrystalLexer'
+    dependsOn 'generateCrystalParser'
 }

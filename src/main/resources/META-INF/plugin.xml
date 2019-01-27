@@ -51,7 +51,7 @@
                 <!--implementation="net.kenro.ji.jin.crystal.features.runconfig.file.CrystalRunFileConfigurationProducer"/>-->
         <!--<defaultTemplatePropertiesProvider implementation="net.kenro.ji.jin.crystal.actions.file.CrystalTemplatePropertiesProvider"/>-->
         <!--<completion.contributor language="Crystal"-->
-                <!--implementationClass="net.kenro.ji.jin.crystal.features.completions.RequireCompletionsContributor"/>-->
+                <!--implementationClass="net.kenro.ji.jin.crystal.features.completions.CrystalCompletionsContributor"/>-->
     </extensions>
 
     <actions>

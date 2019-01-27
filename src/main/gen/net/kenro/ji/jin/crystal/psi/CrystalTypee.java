@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface CrystalCall extends PsiElement {
+public interface CrystalTypee extends PsiElement {
 
   @Nullable
-  CrystalCommand getCommand();
+  CrystalProcType getProcType();
 
   @Nullable
-  CrystalFunction getFunction();
+  CrystalToupleType getToupleType();
 
 }
